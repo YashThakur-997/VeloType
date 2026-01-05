@@ -21,5 +21,16 @@ module.exports = function setupGameController(io) {
                 }, 1000);
             }
         });
+
+
+        socket.on('updateProgress', (roomId, progress) => {
+            if (games[roomId]) {
+                const player = games[roomId].players.find(p => p.id === socket.id);
+                if (player) {
+                    player.progress = progress;
+                    io.to(roomId).emit('gameStatus', games[roomId]);
+                }
+            }
+        });
     });
 };

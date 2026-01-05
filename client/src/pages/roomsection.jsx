@@ -8,6 +8,7 @@ const roomsection = () => {
 
   const navigate = useNavigate();
   const [gameData, setGameData] = useState();
+  const [countdown, setCountdown] = useState();
   const { roomId } = useParams();
 
   useEffect(() => {
@@ -22,6 +23,10 @@ const roomsection = () => {
 
     socket.on('timer-update', (countdown) => {
       console.log("Countdown:", countdown);
+      setCountdown(countdown);
+      if (countdown === 1) {
+        navigate(`/game/${roomId}`);
+      }
     });
 
     socket.on('start-typing', () => {
@@ -86,6 +91,12 @@ const roomsection = () => {
   ) : (
     <p>waiting for host to start</p>
   )}
+
+  {countdown && (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+        <h1 className="text-9xl font-bold text-white animate-ping">{countdown}</h1>
+      </div>
+    )}
   </>
 );
 }
