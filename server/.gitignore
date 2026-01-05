@@ -1,0 +1,13 @@
+/node_modules
+
+# Build output
+/build
+/.next
+/out
+/.nuxt
+/.vercel
+/.turbo
+/dist
+/dist-ssr
+/.parcel-cache
+
