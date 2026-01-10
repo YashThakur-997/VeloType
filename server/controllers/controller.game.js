@@ -32,5 +32,17 @@ module.exports = function setupGameController(io) {
                 }
             }
         });
+
+
+        // Handle rank updates
+        socket.on('updateRank', (roomId, playerId, rank) => {
+            if (games[roomId]) {
+                const player = games[roomId].players.find(p => p.id === playerId);
+                if (player) {
+                    player.rank = rank;
+                    io.to(roomId).emit('gameStatus', games[roomId]);
+                }
+            }
+        });
     });
 };
