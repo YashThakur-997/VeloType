@@ -13,31 +13,41 @@ const gamesection = () => {
     useEffect(() => {
         console.log("Fetching game data for room ID:", roomId);
 
-        socket.on('gameStatus', (data) => {
+        const handleGameStatus = (data) => {
             console.log("Received game data:", data);
             setGameData(data);
-        });
+            
+            // Check if all players finished and navigate to results
+            if (data.players.length > 0) {
+                const allFinished = data.players.every(p => p.progress === 100);
+                if (allFinished) {
+                    console.log("All players finished! Navigating to results...");
+                    navigate(`/results/${roomId}`);
+                }
+            }
+        };
 
+        socket.on('gameStatus', handleGameStatus);
         socket.emit('getGameStatus', roomId);
 
         return () => {
-            socket.off('gameStatus');
+            socket.off('gameStatus', handleGameStatus);
         };
-    }, [roomId]);
+    }, [roomId, navigate]);
 
     const handleTyping = (e) => {
         const value = e.target.value;
         setUserInput(value);
 
         const quote = gameData?.quote;
-        
+
         let correctChars = 0;
 
-        for(let i=0;i<quote.length;i++){
-            if(value[i] == quote[i]){
+        for (let i = 0; i < quote.length; i++) {
+            if (value[i] == quote[i]) {
                 correctChars++;
             }
-            else{
+            else {
                 break;
             }
         }
@@ -48,10 +58,29 @@ const gamesection = () => {
 
         if (value === quote) {
             setIsActive(false);
-            console.log("You finished!");
-            // You can emit a 'playerFinished' event here if you like
+            
+            // Calculate rank based on current gameData
+            const totalplayers = gameData.players.length;
+            let finishedPlayers = 0;
+            
+            for (let i = 0; i < totalplayers; i++) {
+                if (gameData.players[i].progress === 100) {
+                    finishedPlayers++;
+                }
+            }
+            
+            // This player just finished, so increment
+            const playerRank = finishedPlayers + 1;
+            socket.emit('updateRank', roomId, socket.id, playerRank);
+            
+            console.log(`You finished! Your rank is ${playerRank} out of ${totalplayers}`);
+
+            if(finishedPlayers + 1 === totalplayers){
+                console.log("All players finished! Navigating to results...");
+                navigate(`/results/${roomId}`);
+            }
         }
-        
+
     };
 
     return (
@@ -83,7 +112,7 @@ const gamesection = () => {
                             <span className="text-blue-600 font-bold">{Math.round(player.progress || 0)}%</span>
                         </div>
                         <div className="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
-                            <div 
+                            <div
                                 className="bg-blue-500 h-full transition-all duration-300"
                                 style={{ width: `${player.progress || 0}%` }}
                             />

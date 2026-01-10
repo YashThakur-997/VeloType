@@ -17,7 +17,7 @@ module.exports = function setupRoomController(io) {
 
             games[roomId] = {
                 id: roomId,
-                players: [{ id: socket.id, name: 'Player 1', progress: 0, isHost: true }],
+                players: [{ id: socket.id, name: 'Player 1', progress: 0, isHost: true ,rank: null}],
                 isStarted: false,
                 quote: "The quick brown fox jumps over the lazy dog." // You can fetch this from MongoDB
             };
@@ -34,7 +34,7 @@ module.exports = function setupRoomController(io) {
 
                 // New player joining
                 const playerNumber = games[roomId].players.length + 1;
-                const newPlayer = { id: socket.id, name: `Player ${playerNumber}`, progress: 0, isHost: false };
+                const newPlayer = { id: socket.id, name: `Player ${playerNumber}`, progress: 0, isHost: false, rank: null };
                 games[roomId].players.push(newPlayer);
                 console.log(`Player ${socket.id} joined game ${roomId}`);
 

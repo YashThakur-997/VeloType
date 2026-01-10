@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Mainsection from './pages/mainsection.jsx';
 import Roomsection from './pages/roomsection.jsx';
 import Gamesection from './pages/gamesection.jsx';
+import Resultssection from './pages/resultssection.jsx';
 
 function App() {
 
@@ -18,6 +19,10 @@ function App() {
     {
       path:"/game/:roomId",
       element:<><Gamesection/></>
+    },
+    {
+      path:"/results/:roomId",
+      element:<><Resultssection/></>
     }
   ]);
 
