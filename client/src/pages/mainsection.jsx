@@ -47,27 +47,63 @@ const mainsection = () => {
   };
 
   return (
-    <>
-      <div>
-        <p className='flex justify-center bold font-bold text-5xl mt-10'>VeloType</p>
-      </div>
-      <div className='flex justify-center mt-20'>
+  <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
+    {/* Header Section */}
+    <div className="mb-12 text-center">
+      <h1 className="text-6xl font-black text-slate-900 tracking-tighter italic uppercase">
+        Velo<span className="text-blue-600">Type</span>
+      </h1>
+      <p className="text-slate-500 mt-2 font-medium">The ultimate multiplayer typing race</p>
+    </div>
 
-          <button onClick={creategame} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-            Host a Room
-          </button>
-  
-
-          <form onSubmit={joingame} className='ml-10'>
-            <input onChange={(e)=>setRoomId(e.target.value)} type="text" placeholder='Enter Room ID' className='border border-gray-300 rounded-md py-2 px-4 ml-4'/>
-            <button type="submit" className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4'>
-              Join a Room
-            </button>
-          </form>
-        
+    {/* Main Card */}
+    <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-lg border border-slate-100">
+      
+      {/* Host Section */}
+      <div className="mb-10 text-center">
+        <button 
+          onClick={creategame} 
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-blue-200"
+        >
+          Host a Private Room
+        </button>
       </div>
-    </>
-  )
+
+      {/* Divider */}
+      <div className="relative mb-10">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-slate-200"></div>
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-4 bg-white text-slate-400 uppercase tracking-widest font-bold text-xs">OR</span>
+        </div>
+      </div>
+
+      {/* Join Section */}
+      <form onSubmit={joingame} className="space-y-4">
+        <div className="relative">
+          <input 
+            onChange={(e) => setRoomId(e.target.value)} 
+            type="text" 
+            placeholder="Enter Room ID (e.g. 8A2B)" 
+            className="w-full border-2 border-slate-100 bg-slate-50 rounded-xl py-4 px-5 outline-none focus:border-blue-500 focus:bg-white transition-all text-center text-lg font-mono tracking-widest"
+          />
+        </div>
+        <button 
+          type="submit" 
+          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] active:scale-95 shadow-lg shadow-emerald-100"
+        >
+          Enter Race
+        </button>
+      </form>
+    </div>
+
+    {/* Footer Info */}
+    <p className="mt-8 text-slate-400 text-sm italic">
+      Join over 1,000+ racers worldwide
+    </p>
+  </div>
+);
 }
 
 export default mainsection
