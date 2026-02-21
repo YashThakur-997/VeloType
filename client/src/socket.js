@@ -1,7 +1,12 @@
 import { io } from "socket.io-client";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const PORT = process.env.PORT;
 
 // This only runs once when the app starts
-const socket = io("http://localhost:3000", {
+const socket = io(PORT, {
   autoConnect: false,
 });
 
