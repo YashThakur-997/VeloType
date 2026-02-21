@@ -1,9 +1,6 @@
 import { io } from "socket.io-client";
-import dotenv from 'dotenv';
 
-dotenv.config();
-
-const PORT = process.env.PORT;
+const PORT = import.meta.env.VITE_PORT; // Use env variable or default to localhost
 
 // This only runs once when the app starts
 const socket = io(PORT, {
