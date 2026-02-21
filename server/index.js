@@ -3,6 +3,11 @@ const express = require('express');
 const { Server } = require('socket.io');
 const path = require('path'); // Useful for directory paths
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const PORT = process.env.PORT;
 
 const app = express();
 const server = http.createServer(app);
@@ -33,6 +38,4 @@ setupRoomController(io);
 setupGameController(io);
 
 
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
+server.listen(PORT);
