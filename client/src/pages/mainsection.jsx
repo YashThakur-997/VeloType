@@ -55,6 +55,9 @@ const mainsection = () => {
       </h1>
       <p className="text-slate-500 mt-2 font-medium">The ultimate multiplayer typing race</p>
     </div>
+    <div>
+      <p className="text-red-500 mt-2 font-medium">Running on render may take 50-90s to start the server</p>
+    </div>
 
     {/* Main Card */}
     <div className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-lg border border-slate-100">
