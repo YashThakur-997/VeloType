@@ -24,7 +24,7 @@ const roomsection = () => {
     socket.on('timer-update', (countdown) => {
       console.log("Countdown:", countdown);
       setCountdown(countdown);
-      if (countdown === 1) {
+      if (countdown === 0) {
         navigate(`/game/${roomId}`);
       }
     });

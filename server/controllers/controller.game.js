@@ -10,7 +10,7 @@ module.exports = function setupGameController(io) {
             // Only start if the game exists and isn't already started
             if (games[roomId]) {
                 const timer = setInterval(() => {
-                    if (countdown > 0) {
+                    if (countdown >= 0) {
                         io.to(roomId).emit('timer-update', countdown);
                         countdown--;
                     } else {
